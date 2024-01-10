@@ -25,9 +25,9 @@ export default function App() {
             )
           })} />
           <Stack.Screen name="Create" component={CreateScreen} />
-          <Stack.Screen name="Show" component={ShowScreen} options={({ navigation }) => ({
+          <Stack.Screen name="Show" component={ShowScreen} options={({ navigation,route }) => ({
             headerRight: () => (
-              <TouchableOpacity onPress={() => navigation.navigate("Edit")}>
+              <TouchableOpacity onPress={() => navigation.navigate("Edit",{id:route.params.id})}>
                 <EvilIcons name="pencil" size={35} color="black" />
               </TouchableOpacity>
             )

@@ -1,14 +1,25 @@
 import { Button, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Context } from '../context/BlogContext'
 import { Feather } from "@expo/vector-icons"
 
 export default function IndexScreen({navigation}) {
-    const { state, addBlogPost, deleteBlogPost } = useContext(Context)
+    const { state, addBlogPost, deleteBlogPost, getBlogPosts } = useContext(Context)
+
+    useEffect(()=>{
+        getBlogPosts()
+
+    const listener= navigation.addListener("focus",()=>{
+            getBlogPosts()
+        })
+        return()=>{
+            listener.remove()
+        }
+    },[])
     return (
         <View>
 
-            <Button title='Ekle' onPress={addBlogPost} />
+            {/* <Button title='Ekle' onPress={addBlogPost} /> */}
             <FlatList data={state} keyExtractor={blogPost => blogPost.id} renderItem={({ item }) => {
                 return (<TouchableOpacity onPress={() => navigation.navigate("Show",{id:item.id})}><View style={styles.row}><Text style={styles.title}>{item.title}</Text>
                     <TouchableOpacity onPress={() => deleteBlogPost(item.id)}><Feather name="trash" size={24} color="black" /></TouchableOpacity>

@@ -1,53 +1,54 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 
-export default function BlogPostForm() {
-    const [title, setTitle] = useState("")
-    const [content, setContent] = useState("")
+export default function BlogPostForm({ onsubmit, initialValues, isEdit }) {
+    const [title, setTitle] = useState(initialValues ? initialValues.title : "")
+    const [content, setContent] = useState(initialValues ? initialValues.content : "")
 
-  return (
-    <View style={styles.main}>
-          <Text style={styles.label}>Başlığı Giriniz:</Text>
-          <TextInput style={styles.input} value={title} onChangeText={(text)=>setTitle(text)}/>
-          <Text style={styles.label}>İçeriği Giriniz:</Text>
-          <TextInput style={styles.input} value={content} onChangeText={(text) => setContent(text)} />
-          <TouchableOpacity style={styles.buttonMain}>
-              <View style={styles.buttonView}>
-                  <Text style={styles.buttonText}>Kaydet</Text>
-            </View>
-      </TouchableOpacity>
-    </View>
-  )
+    return (
+        <View style={styles.main}>
+            <Text style={styles.label}>Başlığı Giriniz:</Text>
+            <TextInput style={styles.input} value={title} onChangeText={(text) => setTitle(text)} />
+            <Text style={styles.label}>İçeriği Giriniz:</Text>
+            <TextInput style={styles.input} value={content} onChangeText={(text) => setContent(text)} />
+            <TouchableOpacity style={styles.buttonMain} onPress={() => onsubmit(title, content)}>
+                <View style={styles.buttonView}>
+                    {isEdit ? <Text style={styles.buttonText}>Güncelle</Text> : <Text style={styles.buttonText}>Kaydet</Text>}
+
+                </View>
+            </TouchableOpacity>
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
-    main:{
-        marginTop:10,
+    main: {
+        marginTop: 10,
     },
-    label:{
-        fontSize:20,
-        marginLeft:10
+    label: {
+        fontSize: 20,
+        marginLeft: 10
     },
-    input:{
-        borderWidth:1,
-        margin:10,
-        borderRadius:20,
-        padding:5,
-        fontSize:18,
-        marginBottom:15
+    input: {
+        borderWidth: 1,
+        margin: 10,
+        borderRadius: 20,
+        padding: 5,
+        fontSize: 18,
+        marginBottom: 15
     },
-    buttonMain:{
-        padding:30
+    buttonMain: {
+        padding: 30
     },
-    buttonView:{
-        backgroundColor:"green",
-        padding:10,
-        alignItems:"center",
-        justifyContent:"center",
-borderRadius:20
+    buttonView: {
+        backgroundColor: "green",
+        padding: 10,
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 20
     },
-    buttonText:{
-        color:"white",
-        fontSize:20,
+    buttonText: {
+        color: "white",
+        fontSize: 20,
     },
 })
